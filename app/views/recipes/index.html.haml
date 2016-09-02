@@ -1,0 +1,6 @@
+/ index.html.haml
+%h1 This is the placeholder text for the Recipes#Index
+
+- @recipe.each do |recipe|
+	%h2= link_to recipe.title, recipe
+	%p= recipe.description
