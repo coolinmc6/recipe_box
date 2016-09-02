@@ -8,6 +8,7 @@ This is a recipe application following the tutorial by [Mackenzie Child](https:/
 ####Things to look up:
 * How does "recipe_params" work?  What is it doing?  How does permit work?
 * What does 'resources :recipes' do for me in the config/routes.rb file?
+* Explain how the delete link_to works.
 
 ####~3:00
 * Completed the rails new recipe_box command and initialized git...ready to start to developing!
@@ -56,3 +57,82 @@ is not available on the GitHub repo so here is how he accomplishes that:
 ```
 ####~19:40
 * add edit, update and destroy actions (blank as of now)
+* Q: so we added the update method - do we not need to define what @recipe is?
+
+####~22:50 - 'delete' link_to
+
+* Sublime fun fact: Command + W closes a file
+
+####~28:00
+* Just finished editing the application.html.erb file and turned it into a HAML file.  This is what it looks like:
+```haml
+!!! 5
+%html
+%head
+	%title Recipe App
+	= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' 
+	= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' 
+	= csrf_meta_tags
+
+%body
+	= yield
+```
+* With HAML, remember that indentation is important and I don't need the '=> true' part of the
+* There is a difference between '-' and "=" in HAML
+
+####~30:00
+* add the paperclip gem
+* these two lines added to the recipe.rb file (recipe model)
+```ruby
+has_attached_file :image, styles: { medium: "400x400#" }, default_url: "/images/:style/missing.png"
+validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+```
+```shell
+rails db:migrate
+```
+* after adding paperclip, I updated the _form.html.haml to give myself a place to upload the image AND updated
+the strong parameters to allow :image 
+* show it in the show.html.haml and index.html.haml files
+
+####~41:00
+* learn how the image zoom works when you hover over it
+```css
+img {
+	width: 100%;
+	-webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+  -o-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+	&:hover {
+		transform: scale(1.075);
+	}
+}
+```
+####~41:50 - Cocoon gem
+
+####~43:30
+* create the Ingredient and Direction models:
+```shell
+rails generate model Ingredient name:string recipe:belongs_to
+rails g model Direction step:text recipe:belongs_to
+```
+  * How does recipe:belongs_to differ from recipe:references?
+* We created these models after installing cocoon but the cocoon gem GitHub tells us how to associate the two models
+to recipe.rb.
+```ruby
+has_many :ingredients
+accepts_nested_attributes_for :ingredients, reject_if: :all_blank, allow_destroy: true
+has_many :directions
+accepts_nested_attributes_for :directions, reject_if: :all_blank, allow_destroy: true
+```
+* add validation for presence:
+```ruby
+validates :title, :description, :image, presence: true
+```
+
+####~52:45 
+* at this point, there seems to be a problem with the validation.  Despite having text in the text-box for an 
+ingredient or direction, it doesn't seem to recognize anything.  It keeps saying that there is an error...maybe I need
+to restart the server?
+* Cocoon does not appear to be compatible with Rails 5...maybe there is another way to build nested forms.
+STOP
