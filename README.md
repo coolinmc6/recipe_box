@@ -125,7 +125,7 @@ accepts_nested_attributes_for :ingredients, reject_if: :all_blank, allow_destroy
 has_many :directions
 accepts_nested_attributes_for :directions, reject_if: :all_blank, allow_destroy: true
 ```
-* add validation for presence:
+* add validation for presence in recipe model:
 ```ruby
 validates :title, :description, :image, presence: true
 ```
@@ -134,5 +134,9 @@ validates :title, :description, :image, presence: true
 * at this point, there seems to be a problem with the validation.  Despite having text in the text-box for an 
 ingredient or direction, it doesn't seem to recognize anything.  It keeps saying that there is an error...maybe I need
 to restart the server?
-* Cocoon does not appear to be compatible with Rails 5...maybe there is another way to build nested forms.
-STOP
+* Cocoon does not appear to be compatible with Rails 5...maybe there is another way to build nested forms.  Look this up:
+[http://guides.rubyonrails.org/form_helpers.html#nested-forms](nested forms)
+### PAUSE
+* I am going to hold for now until I get the nested forms to work.  I am not great with HAML and my instead convert the 
+form into erb and do everything like that.
+
