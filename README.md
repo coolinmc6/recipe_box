@@ -136,6 +136,7 @@ ingredient or direction, it doesn't seem to recognize anything.  It keeps saying
 to restart the server?
 * Cocoon does not appear to be compatible with Rails 5...maybe there is another way to build nested forms.  Look this up:
 [http://guides.rubyonrails.org/form_helpers.html#nested-forms](nested forms)
+
 ### PAUSE
 * I am going to hold for now until I get the nested forms to work.  I am not great with HAML and my instead convert the 
 form into erb and do everything like that.
